@@ -11,6 +11,9 @@ from sklearn.model_selection import train_test_split
 # This used to create class variable without using __init__() it manages that
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 
 #Using dataclass we are able to directly define variables in class without need of traditional method
 
@@ -59,5 +62,11 @@ class DataIngestion:
             raise CustomException(e,sys)
         
 if __name__ == "__main__":
-    obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    obj=DataIngestion()
+    train_data,test_data=obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+    # To check the result
+    # print(train_arr[0])
+    # print(train_arr.shape,test_arr.shape)
