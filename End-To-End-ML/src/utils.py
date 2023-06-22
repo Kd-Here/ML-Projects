@@ -22,6 +22,14 @@ def save_object(file_path,obj):
         raise CustomException(e,sys)
     
 def evaluate_models(train_X, train_Y, test_X, test_Y,models,param):
+    
+    """
+    Takes training & testing data with input/output features , with models & hyperparameter
+    we run for loop using items() iteration, 
+    using GridSearch tune parameter then fit the model
+    
+    return report which is dictionary with key as model name & value as model r2_score
+    """
     try:
         report = {}
         for name, model in models.items():

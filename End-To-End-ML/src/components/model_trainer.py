@@ -19,15 +19,27 @@ from src.logger import logging
 from src.utils import save_object,evaluate_models
 
 class ModelTrainerConfig:
+
+    """
+    This class is for modeltraining path
+    """
     def __init__(self):
         self.model_trainer_path = os.path.join('artifacts','model.pkl')    
 
 class ModelTrainer:
+
+    """
+    This class performs actual model training. 
+    It has method initiate_model_trainig with dict of models & hyper-parameter.
+    We pass them to evaluate method that returns a report for models.
+    Consider only model with highest performance score and return it.
+
+    """
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
     
-    def handling_data(self,train_data,test_data):
+    def initiate_model_trainig(self,train_data,test_data):
         try:
             logging.info('Split training and test input data')
             train_X, train_Y, test_X, test_Y = train_data[:,:-1],train_data[:,-1],test_data[:,:-1],test_data[:,-1]
@@ -82,13 +94,18 @@ class ModelTrainer:
             }
 
             evaluation_result = evaluate_models(train_X, train_Y, test_X, test_Y,models,param = params)
-
+            # evaluate_models takes training,testing data with input /output features , models, parameters & return a dictionary
 
 
             best_model_name = max(evaluation_result , key = evaluation_result.get)
+            # evaluation_result is dict we find maximum based on values <evaluation_result.get> from dict , returns the key of maximum value 
+
             best_model_score = evaluation_result[best_model_name]
+            # Here with key <best_model_name> with extract value 
 
             best_model = models[best_model_name]
+            # Here with key <best_model_name> we extract value in models dictionary
+            # best_model will have model object i.e. LinearRegression() which is value for the best_model_name key
 
             logging.info('Best model found is %s with evaluation score %s and the model function is %s', best_model_name,best_model_score,best_model)
 

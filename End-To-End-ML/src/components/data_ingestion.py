@@ -69,7 +69,7 @@ if __name__ == "__main__":
     train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
     
     model_trainig = ModelTrainer()
-    best_model = model_trainig.handling_data(train_arr,test_arr)
+    best_model = model_trainig.initiate_model_trainig(train_arr,test_arr)
     print(best_model)
     
     # To check the result
