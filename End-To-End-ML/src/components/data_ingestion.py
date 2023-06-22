@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
-
+from src.components.model_trainer import ModelTrainer
 
 #Using dataclass we are able to directly define variables in class without need of traditional method
 
@@ -27,7 +27,7 @@ class DataIngestionConfig:
 
 class DataIngestion:
     """
-    In this class actuall ingestion process happens of collecting data and storing them.
+    In this class actuall ingestion process happens of collecting data and storing them. It returns train & test .csv files paths
     1) We make folder artifacts folder
     2) We add collected raw data into data.csv of artifacts
     3) We add training data to train.csv
@@ -67,6 +67,11 @@ if __name__ == "__main__":
 
     data_transformation = DataTransformation()
     train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+    
+    model_trainig = ModelTrainer()
+    best_model = model_trainig.handling_data(train_arr,test_arr)
+    print(best_model)
+    
     # To check the result
     # print(train_arr[0])
     # print(train_arr.shape,test_arr.shape)
