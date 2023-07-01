@@ -37,9 +37,9 @@ def predict_data():
         predict_df = data.give_data_as_dataframe()
 
         predict_piple = PredictPiple()
-        result = predict_piple.predict(predict_df)
-
-        return render_template('home.html',res=result[0])
+        result = np.ceil(predict_piple.predict(predict_df))
+        result = '= ' + str(int(result[0]))
+        return render_template('home.html',res=result)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",debug=True)        

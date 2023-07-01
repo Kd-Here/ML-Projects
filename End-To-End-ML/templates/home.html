@@ -1,111 +1,184 @@
+<!DOCTYPE html>
 <html>
-<body>
-    <div class="login">
-       <h1>Student Exam Performance Indicator</h1>
+<head>
+    <title>Student Prediction System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
    
-       <form action="{{ url_for('predict_data')}}" method="post">
-        <h1>
-            <legend>Student Exam Performance Prediction</legend>
-        </h1>
-        <div class="mb-3">
-            <label class="form-label">Gender</label>
-            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
-                <option class="placeholder" selected disabled value="">Select your Gender</option>
-                <option value="male">
-                    Male
-                </option>
-                <option value="female">
-                    Female
-                </option>
-            </select>
+    <style>
+        body {
+            background-color: #111827;
+            color: white; /* Set font color to white */
+        }
+
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            flex: 0 0 200px;
+            margin-bottom: 0;
+        }
+
+        .form-group .form-input,
+        .form-group .form-select {
+            flex: 0 0 200px;
+            color:black;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <header class="text-gray-400 bg-gray-900 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center pb-12">
+          <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+            <img src="/static/images/logo.jpg" alt="" class="h-10 w-auto rounded-full"/>
+            
+          </a>
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-white">Digit Recognition</a>
+            <a class="mr-5 hover:text-white">Pose Estimation</a>
+            <a class="mr-5 hover:text-white">Top seller product</a>
+            <a class="mr-5 hover:text-white">Upcoming</a>
+          </nav>
+          
+          
+          <a href='https://github.com/Kd-Here/ML-Projects/tree/main/End-To-End-ML' target="_blank">
+          <button  class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">View Source Code
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+          </a>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Race or Ethnicity</label>
-            <select class="form-control" name="ethnicity" placeholder="Enter you ethnicity" required>
-                <option class="placeholder" selected disabled value="">Select Ethnicity</option>
-                <option value="group A">
-                    Group A
-                </option>
-                <option value="group B">
-                    Group B
-                </option>
-                <option value="group C">
-                    Group C
-                </option>
-                <option value="group D">
-                    Group D
-                </option>
-                <option value="group E">
-                    Group E
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Parental Level of Education</label>
-            <select class="form-control" name="parental_level_of_education"
-                placeholder="Enter you Parent Education" required>
-                <option class="placeholder" selected disabled value="">Select Parent Education</option>
-                <option value="associate's degree">
-                    associate's degree
-                </option>
-                <option value="bachelor's degree">
-                    bachelor's degree
-                </option>
-                <option value="high school">
-                    high school
-                </option>
-                <option value="master's degree">
-                    master's degree
-                </option>
-                <option value="some college">
-                    some college
-                </option>
-                <option value="some high school">
-                    some high school
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Lunch Type</label>
-            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
-                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
-                <option value="free/reduced">
-                    free/reduced
-                </option>
-                <option value="standard">
-                    standard
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Test preparation Course</label>
-            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
-                required>
-                <option class="placeholder" selected disabled value="">Select Test_course</option>
-                <option value="none">
-                    None
-                </option>
-                <option value="completed">
-                    Completed
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Writing Score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Reading Score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Reading Score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" required />
-        </div>
-    </form>
-    <h2>
-       Model prediction is {{res}}
-    </h2>
-   <body>
+      </header>
+
+
+      <div class="flex items-center justify-center">
+        <div class="login mx-auto pl-8">
+          <h1 class="text-3xl font-bold mb-6">Student Exam Performance Indicator</h1>
+              
+        <form action="{{ url_for('predict_data')}}" method="post">
+            <h1 class="text-xl font-semibold pb-4">Select the options from the dropdown menus</h1>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="gender">Gender</label>
+                <select class="form-select"  id="gender" name="gender"   required >
+                    <option class="placeholder " selected disabled value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="ethnicity">Race or Ethnicity</label>
+                <select class="form-select" id="ethnicity" name="ethnicity" required>
+                    <option class="placeholder" selected disabled value="">Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="parent_education">Parental Level of Education</label>
+                <select class="form-select" id="parent_education" name="parental_level_of_education" required>
+                    <option class="placeholder" selected disabled value="">Select Parent Education</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="high school">High School</option>
+                    <option value="master's degree">Master's Degree</option>
+                    <option value="some college">Some College</option>
+                    <option value="some high school">Some High School</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="lunch">Lunch Type</label>
+                <select class="form-select" id="lunch" name="lunch" required>
+                    <option class="placeholder" selected disabled value="">Select Lunch Type</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="test_course">Test Preparation Course</label>
+                <select class="form-select" id="test_course" name="test_preparation_course" required>
+                    <option class="placeholder" selected disabled value="">Select Test Course</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2 " for="reading_score">Writing Score out of 100</label>
+                <input class="form-input pl-1" type="number" id="reading_score" name="reading_score" placeholder=" Enter your writing score" min="0" max="100"  />
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="block mb-2" for="writing_score">Reading Score out of 100</label>
+                <input class="form-input pl-1" type="number" id="writing_score" name="writing_score" placeholder=" Enter your reading Score" min="0" max="100" />
+            </div>
+            
+            <div class="form-group mb-3">
+                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Predict Maths Score" required />
+            </div>
+            
+        </form>
+        
+        <h2 class="text-xl">
+            Predicted maths score  {{res}}
+        </h2>
+    </div>
+</div>
+
+
+        <footer class="text-gray-400 bg-gray-900 body-font">
+            <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+              <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
+                <img src="/static/images/logo.jpg" alt="" class="h-10 w-auto rounded-full"/>
+                <span class="ml-3 text-xl">ML Projects</span>
+              </a>
+              <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">
+                <a href="https://github.com/Kd-Here" class="text-gray-500 ml-1" target="_blank" rel="noopener noreferrer">By Kdhere</a>
+              </p>
+              <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+                <a  href="https://github.com/Kd-Here" class="text-gray-400">
+                  <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.206 11.385.6.112.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C3.72 18.08 3.085 17.8 3.085 17.8c-1.088-.745.084-.73.084-.73 1.203.084 1.838 1.232 1.838 1.232 1.07 1.833 2.807 1.305 3.495.997.108-.776.417-1.305.758-1.605-2.65-.3-5.44-1.324-5.44-5.89 0-1.303.465-2.365 1.232-3.195-.124-.3-.533-1.518.116-3.16 0 0 1-.32 3.3 1.226A11.45 11.45 0 0112 6.086c.98.004 1.967.132 2.892.39 2.28-1.546 3.28-1.226 3.28-1.226.65 1.642.24 2.86.12 3.16.77.83 1.226 1.893 1.226 3.195 0 4.578-2.793 5.587-5.445 5.885.42.36.81 1.096.81 2.22 0 1.604-.015 2.896-.015 3.286 0 .32.215.694.825.576C20.565 21.795 24 17.294 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                </a>
+                <a href="https://twitter.com/kdhere99" class="ml-3 text-gray-400">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                  </svg>
+                </a>
+                
+                <a class="ml-3 text-gray-400">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/kunal-dongre-167b6b20b/" class="ml-3 text-gray-400">
+                  <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                    <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                  </svg>
+                </a>
+              </span>
+            </div>
+          </footer>
+    
+
+
+
+
+</body>
 </html>
